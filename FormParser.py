@@ -279,7 +279,7 @@ class Form4Parser(FormParser):
                 print(f"Failed to create new daily_filings list with error: {e}")
                 return new_filings
     
-    def filter_filings(self, unfiltered_filing_data, min_value = 1000, transaction_codes = ["S", "D"]):
+    def filter_filings(self, unfiltered_filing_data, min_value, transaction_codes):
         """Recieves most recent filing data as list of dict. Filters based on trading criteria and saves to daily_filings_{todays_date}.json file while returning list of filtered filings to trade_execution class"""
 
         new_filtered_filings = []
@@ -361,11 +361,11 @@ class Form4Parser(FormParser):
         except Exception as e:
             print(f"Error, failed to clear data files: {e}")
 
-    def update_filtered(self):
+    def update_filtered(self, min_value, transaction_codes):
         new_urls, new_timestamps = self.fetch_recent_form4()
         updated_urls, updated_timestamps = self.update_daily_urls(new_urls, new_timestamps)
         new_filings = self.unpack_urls(updated_urls, updated_timestamps)
-        filtered_filings = self.filter_filings(new_filings)
+        filtered_filings = self.filter_filings(new_filings, min_value = 1000, transaction_codes = ["S", "D"])
 
         return filtered_filings
     
