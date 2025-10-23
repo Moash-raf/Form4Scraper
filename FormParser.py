@@ -361,10 +361,17 @@ class Form4Parser(FormParser):
         except Exception as e:
             print(f"Error, failed to clear data files: {e}")
 
-    def update(self):
+    def update_filtered(self):
         new_urls, new_timestamps = self.fetch_recent_form4()
         updated_urls, updated_timestamps = self.update_daily_urls(new_urls, new_timestamps)
         new_filings = self.unpack_urls(updated_urls, updated_timestamps)
         filtered_filings = self.filter_filings(new_filings)
 
-        return(filtered_filings)
+        return filtered_filings
+    
+    def update_unfiltered(self):
+        new_urls, new_timestamps = self.fetch_recent_form4()
+        updated_urls, updated_timestamps = self.update_daily_urls(new_urls, new_timestamps)
+        new_filings = self.unpack_urls(updated_urls, updated_timestamps)
+
+        return new_filings
