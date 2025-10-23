@@ -23,7 +23,7 @@ class IBapi(EClient, EWrapper):
 app = IBapi()
 app.connect("127.0.0.1", 7497, clientId = 1)
 
-api_thread = threading.Thread(target=run_loop, args=(app,), daemon=True)
+api_thread = threading.Thread(target=app.run_loop(), args=(app,), daemon=True)
 api_thread.start()
 
 time.sleep(2)
