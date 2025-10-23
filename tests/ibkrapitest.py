@@ -8,6 +8,7 @@ import time
 class IBapi(EClient, EWrapper):
     def __init__(self):
         EClient.__init__(self, self)
+        self.hist_data = []  # store OHLCV data
     
     def nextValidId(self, orderId):
         super().nextValidId(orderId)
@@ -67,19 +68,20 @@ app.reqHistoricalData(
     reqId=req_id,
     contract=contract,
     endDateTime='',          # '' means now
-    durationStr='1 H',       # 1 hour
-    barSizeSetting='1 min',  # 1-minute bars
+    durationStr= "1 D",       # 1 hour
+    barSizeSetting= '1 min',  # 1-minute bars
     whatToShow='TRADES',     
     useRTH=1,                # regular trading hours only
     formatDate=1,
-    keepUpToDate=False       # snapshot only
+    keepUpToDate=False,       # snapshot only
+    chartOptions=[]
 )
 
 # app.placeOrder(app.next_order_id, contract, order)
 # app.next_order_id += 1
 
-print(app.hist_data)
-
 time.sleep(5)
+
+print(app.hist_data)
 
 app.disconnect()
