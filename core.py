@@ -34,54 +34,47 @@ class FormParser(ABC):
     def unpack_urls(self):
         """Converts atom feed of URLs into filing data. Returns list of dicts of filing information"""
         pass
-
-    
-class FormFilters(ABC):
-    """
-    Contains all filtering logic to determine which Form 4's to follow.
-
-    Current criteria:
-
-     - Select only stock purchases with transaction code "A" or "P"
-     - Select only Stocks bought by officers or directors of the company
-     - Select only large purchases (>=50,000 USD Transaction value)
-
-    Parameters:
-
-     - self.parameters_dict = dictionary of parameters to filter from, key = Field, item = list of codes/value)
-     - self.unfiltered_dict = incoming dictionary of Form 4 information to be filtered
-     - self.filtered_dict = outbound dict of filtered prospective companies
-    """
-
     @abstractmethod
-    def filterforms(self):
-        """Recieves dict of all new forms, if it is empty, do nothing"""
+    def filter_filings(self):
+        """Recieves filing data, filters only to ones that have been bought by officer or director, have minimum value, and have specific transaction code"""
         pass
+    @abstractmethod
+    def clear_forms(self):
+        """Clears all saved data from data directory"""
+    @abstractmethod
+    def update_filtered(self):
+        """Returns most recent 100 Form 4 filings as dicts based on filter criteria"""
+        pass
+    @abstractmethod
+    def update_unfiltered(self):
+        """Returns most recent 100 form 4 filings as dicts"""
 
 class ExecutionHandler(ABC):
     """
     Recieves a list of companies to buy, checks the current account balance, and executes trades according to the defined trading logic.
+
+    Broker connection and sell/buy loops will be handled in main runner function.
 
     Parameters:
 
      - self.credentials_path = string of where the credentials are located
      - self.take_profit = float value for the take profit percentage (default = 0.2)
      - self.stop_loss = float value for the stop loss percentage (default = 0.07) 
-     - self.current_positions = dict of executed trades that day
+     - self.daily_orders_filled = dict of executed trades that day
+     - self.daily_orders_sent = dict of orers sent but not filled that day
     """
-    @abstractmethod
-    def connecttobroker(self, credentials_path):
-        """Access credentials txt file and log into broker account"""
-        pass
 
     @abstractmethod
-    def definetradinglogic(self):
-        """Outlines all relevant trading logic"""
+    def define_trading_logic(self):
+        """Recieves hourly Form 4 filings to trade. Returns orders with all relevant trading logic."""
         pass
-
     @abstractmethod
-    def executetrade(self, form_dicts):
-        """Recieve most up to date Form 4 dicts and execute trades according to trading logic. Stores recorded trades in csv"""
+    def match_daily_executions(self):
+        """Eliminates existing Orders submitted that day from hourly order feed. Ensures no duplicate orders are done"""
+        pass
+    @abstractmethod
+    def execute_trade(self):
+        """Recieve most up to date order and contract objects and execute trades according to trading logic. Stores recorded trades in csv"""
         pass
 
 class ReportingHandler(ABC):
@@ -97,12 +90,23 @@ class ReportingHandler(ABC):
     """
     
     @abstractmethod
-    def pushtradenote(self, trade_info):
+    def push_trade_note(self):
         """Push a notification to a live webpage with all trade information according to NEWTRADES bool"""
         pass
-
     @abstractmethod
-    def calculatemetrics(self):
+    def send_daily_log(self):
+        """Requests daily trade log of all submitted and filled trades and returns a list of traded symbols"""
+        pass
+    @abstractmethod
+    def summarize_day_trades(self):
+        """Creates a daily report of all trades performed that day"""
+        pass
+    @abstractmethod
+    def summarize_unfiltered_form_4_filings(self):
+        """Creates a list of dicts of all Form 4 filings submitted that day"""
+        pass
+    @abstractmethod
+    def calculate_metrics(self):
         """Calculates daily win rate, total profit, total loss, amount lost to commissions, PnL"""
 
 

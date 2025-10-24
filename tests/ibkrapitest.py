@@ -54,12 +54,12 @@ contract.currency = "USD"
 
 # Defining order
 
-# order = Order()
-# order.action = "SELL"
-# order.orderType = "MKT"
-# order.totalQuantity = 2
-# order.eTradeOnly = False
-# order.firmQuoteOnly = False
+order = Order()
+order.action = "BUY"
+order.orderType = "MKT"
+order.totalQuantity = 2
+order.eTradeOnly = False
+order.firmQuoteOnly = False
 
 # Requesting market data
 
@@ -77,8 +77,13 @@ app.reqHistoricalData(
     chartOptions=[]
 )
 
-# app.placeOrder(app.next_order_id, contract, order)
-# app.next_order_id += 1
+
+def make_order(contract, trade_order):
+    app.placeOrder(app.next_order_id, contract, trade_order)
+    app.next_order_id +=1
+    return()
+
+make_order(contract, order)
 
 time.sleep(5)
 
