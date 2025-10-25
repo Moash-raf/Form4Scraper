@@ -68,10 +68,7 @@ class ExecutionHandler(ABC):
     def define_trading_logic(self):
         """Recieves hourly Form 4 filings to trade. Returns orders with all relevant trading logic."""
         pass
-    @abstractmethod
-    def match_daily_executions(self):
-        """Eliminates existing Orders submitted that day from hourly order feed. Ensures no duplicate orders are done"""
-        pass
+
     @abstractmethod
     def execute_trade(self):
         """Recieve most up to date order and contract objects and execute trades according to trading logic. Stores recorded trades in csv"""

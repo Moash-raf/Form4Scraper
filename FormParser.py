@@ -26,7 +26,6 @@ class Form4Parser(FormParser):
         self.daily_filings_path = os.path.join(base_path, f"daily_filings_{self.today}.json")
         self.daily_filtered_filings_path = os.path.join(base_path, f"daily_filtered_filings_{self.today}.json")
 
-
     def fetch_recent_form4(self):
         """
         Uses selenium to fetch most recent Form 4 data via Atom feed in XML format 
