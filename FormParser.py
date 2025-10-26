@@ -20,6 +20,7 @@ class Form4Parser(FormParser):
         self.feed_url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4&owner=only&count=100&output=atom"
         self.header = {"User-Agent": "Bermuda Research Form4Monitor/1.0 (team@bermudaresearch.com)"}
         self.fetch_delay = 0.2 #delay of 200 milliseconds to avoid request throttling
+        self.base_path = base_path
         self.atom_feed_path = os.path.join(base_path, "browse-edgar")
         self.daily_urls_path = os.path.join(base_path, f"daily_urls_{self.today}")
         self.daily_timestamps_path = os.path.join(base_path, f"daily_timestamps_{self.today}")
@@ -40,7 +41,7 @@ class Form4Parser(FormParser):
         options = Options()
         options.set_preference("browser.download.useDownloadDir", True)
         options.set_preference("browser.download.folderList", 2)
-        options.set_preference("browser.download.dir", os.path.abspath(self.atom_feed_path))
+        options.set_preference("browser.download.dir", os.path.abspath(self.base_path))
         options.set_preference("browser.download.manager.showWhenStarting", False)
         options.set_preference("pdfjs.disabled", True)
         options.set_preference("browser.download.alwaysOpenPanel", False)
@@ -94,8 +95,8 @@ class Form4Parser(FormParser):
         for entry in entries:
             ts = entry.find("atom:updated", namespace).text
             ts_datetime_object = datetime.fromisoformat(ts)
-            if ts_datetime_object.date() != datetime.today().date():
-                continue
+            # if ts_datetime_object.date() != datetime.today().date():
+            #     continue
             
             title = entry.find("atom:title", namespace).text
             if "Issuer" not in title:
@@ -109,7 +110,7 @@ class Form4Parser(FormParser):
                     new_urls.append(link)
                     new_timestamps.append(ts_datetime_object if ts_datetime_object is not None else "N/A")
                     
-        print(f"Fetched {len(self.new_urls)} new URLs")
+        print(f"Fetched {len(new_urls)} new URLs")
 
         #Remove the browse-edgar file to avoid naming errors
 
@@ -119,7 +120,7 @@ class Form4Parser(FormParser):
         except Exception as e:
             print(f"Warning: could not delete {self.atom_feed_path}: {e}")
 
-        return()
+        return new_urls, new_timestamps
     
     def update_daily_urls(self, new_url_list, new_timestamp_list):
         """
@@ -360,11 +361,11 @@ class Form4Parser(FormParser):
         except Exception as e:
             print(f"Error, failed to clear data files: {e}")
 
-    def update_filtered(self, min_value, transaction_codes):
+    def update_filtered(self, min_value = 1000, transaction_codes = ["S", "D"]):
         new_urls, new_timestamps = self.fetch_recent_form4()
         updated_urls, updated_timestamps = self.update_daily_urls(new_urls, new_timestamps)
         new_filings = self.unpack_urls(updated_urls, updated_timestamps)
-        filtered_filings = self.filter_filings(new_filings, min_value = 1000, transaction_codes = ["S", "D"])
+        filtered_filings = self.filter_filings(new_filings, min_value, transaction_codes)
 
         return filtered_filings
     

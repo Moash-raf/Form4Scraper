@@ -1,8 +1,9 @@
 from core import ExecutionHandler
-from ibapi.client import EClient
-from ibapi.wrapper import EWrapper
+from ibapi.client import *
+from ibapi.wrapper import *
 from ibapi.contract import Contract
 from ibapi.order import Order
+from ibapi.ticktype import TickTypeEnum
 from ibapi.common import *
 import threading
 import time
@@ -17,96 +18,28 @@ class IBApp(EWrapper, EClient):
         EClient.__init__(self, self)
         self.next_order_id = None
         self.connected_flag = False
-        self.market_data = {}
-    
-    def tickPrice(self, reqId, tickType, price, attrib):
-        """
-        TickPrice handler. Stores Last, Bid, Ask prices per reqId. Ignores zero or negative prices.
-        """
-        if price <= 0:
-            return
-
-        if reqId not in self.market_data:
-            self.market_data[reqId] = {}
-
-        if tickType == 4:   # Last
-            self.market_data[reqId]['last'] = price
-        elif tickType == 1: # Bid
-            self.market_data[reqId]['bid'] = price
-        elif tickType == 2: # Ask
-            self.market_data[reqId]['ask'] = price
- 
-    def get_symbol_price(self, contract, fallback_price, timeout=10):
-        """Requests the most recent market price for a contract."""
-        # Ensure delayed data if no live feed
-        self.reqMarketDataType(3)
-
-        reqId = int(time.time() * 1000) % 100000
-        self.market_data[reqId] = {}
+        self.last_close = 0
         
-        # Request market data (streaming)
-        self.reqMktData(reqId, contract, "", False, False, [])
-
-        start = time.time()
-        price = None
-
-        while time.time() - start < timeout:
-            ticks = self.market_data[reqId]
-            if 'last' in ticks:
-                price = ticks['last']
-                break
-            elif 'bid' in ticks and 'ask' in ticks:
-                price = (ticks['bid'] + ticks['ask']) / 2
-                break
-            time.sleep(0.05)
-
-        # Clean up subscription
-        self.cancelMktData(reqId)
-
-        if price is None or price <= 0:
-            print(f"No price for {contract.symbol}, fetching last close data")
-
-            self.hist_data = []
-            hist_reqId = reqId + 1
-            self.reqHistoricalData(
-                hist_reqId,
-                contract,
-                "",
-                "2 D",
-                "1 day",
-                "TRADES",
-                1,
-                1,
-                False,
-                []
-            )
-
-            start_hist = time.time()
-
-            while len(self.hist_data) == 0 and time.time() - start_hist < timeout:
-                time.sleep(0.1)
-            if len(self.hist_data) > 0:
-                price = self.hist_data[-1]["close"]
-                print(f"Using last close for {contract.symbol}: {price}")
-            else:
-                print(f"Historical data unavailable for {contract.symbol}, using fallback {round(fallback_price, 2)}")
-                price = round(fallback_price, 2)
-        return price
-
-    def nextValidId(self, orderId):
-        """TWS callback giving the next order ID available"""
+    def nextValidId(self, orderId : OrderId):
         self.next_order_id = orderId
         self.connected_flag = True
-        print(f"[IBApp] Connected. Next valid order ID: {orderId}")
+
+    def nextId(self):
+        self.next_order_id += 1
+        return self.next_order_id
     
     def error(self, reqId, errorCode, errorString, advancedOrderRejectJson=""):
         """Catch and print any API error messages"""
-        print(f"[IBApp ERROR] ID: {reqId}, Code: {errorCode}, Msg: {errorString}")
+        print(f"ReqID: {reqId}, errorCode: {errorCode}, errorString: {errorString}, orderReject: {advancedOrderRejectJson}")
     
     def connectionClosed(self):
         """Notification when IBApp disconnects"""
         self.connected_flag = False
-        print("[IBApp] Connection closed")
+        print("Connection closed")
+    
+    def tickPrice(self, reqId, tickType, price, attrib):
+        if TickTypeEnum.to_str(tickType) in ["DELAYED_CLOSE", "CLOSE"]:
+            self.last_close = price
     
 # Defining actual Trading Execution handler class
 
@@ -193,9 +126,22 @@ class IBKRPaperExecutionHandler(ExecutionHandler):
             contract.exchange = "SMART"
             contract.currency = "USD"
 
-            # Fetch live market price
+            # Fetch live/delayed market price
 
-            current_price = self.app.get_symbol_price(contract, filing["price"]*1.1)
+            fallback_price = filing["price"]*1.1
+
+            try:
+
+                self.app.reqMarketDataType(3)
+                self.app.reqMktData(self.app.nextId(), contract, "232", False, False, [])
+                time.sleep(5)
+                print(f"Fetched price for {symbol}: {self.app.last_close}")
+
+                current_price = self.app.last_close
+            except Exception as e:
+                print(f"Unable to fetch market price with error: {e}")
+                continue
+
 
             # Define stop loss & take profit values
 
@@ -264,6 +210,7 @@ class IBKRPaperExecutionHandler(ExecutionHandler):
         
         if not trade_orders:
             print("No trades to execute")
+            self.app.disconnect()
             return
         
         log_path = os.path.join(self.logs_dir, f"executed_trades_{self.today}.json")
@@ -275,7 +222,8 @@ class IBKRPaperExecutionHandler(ExecutionHandler):
             try:
                 
                 # Wait until next valid order ID comes in
-
+                
+                self.app.nextId
                 while self.app.next_order_id is None:
                     time.sleep(0.1)
                 
@@ -299,43 +247,43 @@ class IBKRPaperExecutionHandler(ExecutionHandler):
                     time.sleep(0.2)
                     self.app.placeOrder(take_profit_id, contract, take_profit_order)
                     time.sleep(0.2)
+                    trade_data.update({
+                        "order_id" : parent_id,
+                        "status" : "SENT",
+                        "timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    })
+                    executed_trades.append(trade_data)
+                    order_count += 1
+
                 except Exception as e:
                     print(f"Failed to submit orders for {trade_data['symbol']}")
-                
-            
-
-
-
-            #     trade_data.update({
-            #         "order_id" : parent_id,
-            #         "status" : "SENT",
-            #         "timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     })
-            #     executed_trades.append(trade_data)
-
-            #     order_count += 1
-            #     time.sleep(0.5)
+                        
+                time.sleep(0.5)
 
             except Exception as e:
                 print(f"Unable to execute order for {trade_data['order_qty']} shares of {trade_data['symbol']}: {e}")
             
-            # print(f"Executed {len(executed_trades)} trades")
+        print(f"Executed {len(executed_trades)} trades")
+        self.app.disconnect()
 
-        # try:
-        #     if os.path.exists(log_path):
-        #         with open(log_path, "r", encoding="utf-8") as f:
-        #             daily_logs = json.load(f)
-        #         daily_logs.extend(executed_trades)
-        #         with open(log_path, "w", encoding="utf-8") as f:
-        #             json.dump(daily_logs, f, indent=2, ensure_ascii=False)
+        try:
+            if os.path.exists(log_path):
+                with open(log_path, "r", encoding="utf-8") as f:
+                    daily_logs = json.load(f)
+                daily_logs.extend(executed_trades)
+                with open(log_path, "w", encoding="utf-8") as f:
+                    json.dump(daily_logs, f, indent=2, ensure_ascii=False)
 
-        #     else:
-        #         with open(log_path, "x", encoding="utf-8") as f:
-        #             json.dump(executed_trades, f, indent=2, ensure_ascii=False)
+            else:
+                with open(log_path, "x", encoding="utf-8") as f:
+                    json.dump(executed_trades, f, indent=2, ensure_ascii=False)
             
-        #     print(f"Added {len(executed_trades)} new trades to daily log")
+            print(f"Added {len(executed_trades)} new trades to daily log")
 
-        # except Exception as e:
-        #     print(f"Cannot log trades to directory {log_path}: {e}")
-
-
+        except Exception as e:
+            print(f"Cannot log trades to directory {log_path}: {e}")
+    
+    def run_trading_cycle(self, filtered_filings):
+        self.connecttobroker()
+        trade_orders = self.define_trading_logic(filtered_filings)
+        self.execute_trade(trade_orders)
