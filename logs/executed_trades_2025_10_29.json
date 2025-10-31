@@ -1,0 +1,332 @@
+[
+  {
+    "symbol": "NEOG",
+    "current_price": 0,
+    "stop_loss_price": 0.0,
+    "take_profit_price": 0.0,
+    "order_qty": 2,
+    "order_id": 475,
+    "status": "SENT",
+    "timestamp": "2025-10-29 10:08:14"
+  },
+  {
+    "symbol": "NEOG",
+    "current_price": 0,
+    "stop_loss_price": 0.0,
+    "take_profit_price": 0.0,
+    "order_qty": 2,
+    "order_id": 478,
+    "status": "SENT",
+    "timestamp": "2025-10-29 10:08:15"
+  },
+  {
+    "symbol": "NEOG",
+    "current_price": 0,
+    "stop_loss_price": 0.0,
+    "take_profit_price": 0.0,
+    "order_qty": 2,
+    "order_id": 483,
+    "status": "SENT",
+    "timestamp": "2025-10-29 11:00:50"
+  },
+  {
+    "symbol": "NEOG",
+    "current_price": 0,
+    "stop_loss_price": 0.0,
+    "take_profit_price": 0.0,
+    "order_qty": 2,
+    "order_id": 486,
+    "status": "SENT",
+    "timestamp": "2025-10-29 11:00:51"
+  },
+  {
+    "symbol": "FFIN",
+    "current_price": 31.34,
+    "stop_loss_price": 29.77,
+    "take_profit_price": 34.47,
+    "order_qty": 5,
+    "order_id": 491,
+    "status": "SENT",
+    "timestamp": "2025-10-29 12:25:29"
+  },
+  {
+    "symbol": "NBBK",
+    "current_price": 18.06,
+    "stop_loss_price": 17.16,
+    "take_profit_price": 19.87,
+    "order_qty": 5,
+    "order_id": 494,
+    "status": "SENT",
+    "timestamp": "2025-10-29 12:25:30"
+  },
+  {
+    "symbol": "AGIO",
+    "current_price": 43.43,
+    "stop_loss_price": 41.26,
+    "take_profit_price": 47.77,
+    "order_qty": 5,
+    "order_id": 516,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:39"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 2,
+    "order_id": 519,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:40"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 5,
+    "order_id": 522,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:41"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 5,
+    "order_id": 525,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:42"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 2,
+    "order_id": 528,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:43"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 2,
+    "order_id": 531,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:44"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 1,
+    "order_id": 534,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:46"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 5,
+    "order_id": 537,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:47"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 2,
+    "order_id": 540,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:48"
+  },
+  {
+    "symbol": "OBK",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 1,
+    "order_id": 543,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:49"
+  },
+  {
+    "symbol": "FFIN",
+    "current_price": 34.8,
+    "stop_loss_price": 33.06,
+    "take_profit_price": 38.28,
+    "order_qty": 2,
+    "order_id": 546,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:50"
+  },
+  {
+    "symbol": "WGO",
+    "current_price": 40.6,
+    "stop_loss_price": 38.57,
+    "take_profit_price": 44.66,
+    "order_qty": 5,
+    "order_id": 549,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:51"
+  },
+  {
+    "symbol": "vicr",
+    "current_price": 40.6,
+    "stop_loss_price": 38.57,
+    "take_profit_price": 44.66,
+    "order_qty": 5,
+    "order_id": 552,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:52"
+  },
+  {
+    "symbol": "FFIN",
+    "current_price": 40.6,
+    "stop_loss_price": 38.57,
+    "take_profit_price": 44.66,
+    "order_qty": 2,
+    "order_id": 555,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:53"
+  },
+  {
+    "symbol": "CB",
+    "current_price": 275.58,
+    "stop_loss_price": 261.8,
+    "take_profit_price": 303.14,
+    "order_qty": 100,
+    "order_id": 558,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:54"
+  },
+  {
+    "symbol": "RVP",
+    "current_price": 0.9038,
+    "stop_loss_price": 0.86,
+    "take_profit_price": 0.99,
+    "order_qty": 2,
+    "order_id": 561,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:56"
+  },
+  {
+    "symbol": "vicr",
+    "current_price": 0.9038,
+    "stop_loss_price": 0.86,
+    "take_profit_price": 0.99,
+    "order_qty": 5,
+    "order_id": 564,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:57"
+  },
+  {
+    "symbol": "SMG",
+    "current_price": 56.02,
+    "stop_loss_price": 53.22,
+    "take_profit_price": 61.62,
+    "order_qty": 5,
+    "order_id": 567,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:58"
+  },
+  {
+    "symbol": "CHMG",
+    "current_price": 51.78,
+    "stop_loss_price": 49.19,
+    "take_profit_price": 56.96,
+    "order_qty": 5,
+    "order_id": 570,
+    "status": "SENT",
+    "timestamp": "2025-10-29 16:06:59"
+  },
+  {
+    "symbol": "WDFC",
+    "current_price": 191.41,
+    "stop_loss_price": 181.84,
+    "take_profit_price": 210.55,
+    "order_qty": 2,
+    "order_id": 581,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:01"
+  },
+  {
+    "symbol": "WDFC",
+    "current_price": 191.41,
+    "stop_loss_price": 181.84,
+    "take_profit_price": 210.55,
+    "order_qty": 5,
+    "order_id": 584,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:02"
+  },
+  {
+    "symbol": "WDFC",
+    "current_price": 191.41,
+    "stop_loss_price": 181.84,
+    "take_profit_price": 210.55,
+    "order_qty": 2,
+    "order_id": 587,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:03"
+  },
+  {
+    "symbol": "LVS",
+    "current_price": 58.78,
+    "stop_loss_price": 55.84,
+    "take_profit_price": 64.66,
+    "order_qty": 100,
+    "order_id": 590,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:04"
+  },
+  {
+    "symbol": "ISRG",
+    "current_price": 537.59,
+    "stop_loss_price": 510.71,
+    "take_profit_price": 591.35,
+    "order_qty": 100,
+    "order_id": 593,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:06"
+  },
+  {
+    "symbol": "NMRA",
+    "current_price": 2.5,
+    "stop_loss_price": 2.38,
+    "take_profit_price": 2.75,
+    "order_qty": 100,
+    "order_id": 596,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:07"
+  },
+  {
+    "symbol": "VST",
+    "current_price": 199.37,
+    "stop_loss_price": 189.4,
+    "take_profit_price": 219.31,
+    "order_qty": 100,
+    "order_id": 599,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:08"
+  },
+  {
+    "symbol": "TRUP",
+    "current_price": 41.68,
+    "stop_loss_price": 39.6,
+    "take_profit_price": 45.85,
+    "order_qty": 5,
+    "order_id": 602,
+    "status": "SENT",
+    "timestamp": "2025-10-29 21:19:09"
+  }
+]

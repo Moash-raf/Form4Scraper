@@ -95,8 +95,8 @@ class Form4Parser(FormParser):
         for entry in entries:
             ts = entry.find("atom:updated", namespace).text
             ts_datetime_object = datetime.fromisoformat(ts)
-            # if ts_datetime_object.date() != datetime.today().date():
-            #     continue
+            if ts_datetime_object.date() != datetime.today().date():
+                continue
             
             title = entry.find("atom:title", namespace).text
             if "Issuer" not in title:
@@ -258,16 +258,20 @@ class Form4Parser(FormParser):
 
         #Writing updated daily_filings file or creating new one
         if os.path.exists(self.daily_filings_path):
+            time.sleep(0.5)
             try:
                 with open(self.daily_filings_path, "r", encoding="utf-8") as f:
                     daily_filings = json.load(f)
-                daily_filings = daily_filings.append(new_filings)
+                daily_filings.extend(new_filings)
                 with open(self.daily_filings_path, "w", encoding="utf-8") as f:
                     json.dump(daily_filings, f, indent=2, ensure_ascii=False)
                 print(f"Added {len(new_filings)} new filings to daily_filings list")
                 return new_filings
             except Exception as e:
                 print(f"Error updating daily_filings file: {e}")
+                with open(self.daily_filings_path, "w", encoding="utf-8") as f:
+                    json.dump(new_filings, f, indent=2, ensure_ascii=False)
+                print(f"Successfully created new daily_filings list with {len(new_filings)} at: {self.daily_filings_path}")
                 return new_filings
         else:
             try:
@@ -316,7 +320,7 @@ class Form4Parser(FormParser):
             try:
                 with open(self.daily_filtered_filings_path, "r", encoding="utf-8") as f:
                     daily_filtered_filings = json.load(f)
-                daily_filtered_filings.append(new_filtered_filings)
+                daily_filtered_filings.extend(new_filtered_filings)
                 with open(self.daily_filtered_filings_path, "w", encoding="utf-8") as f:
                     json.dump(daily_filtered_filings, f, indent=2, ensure_ascii=False)
         

@@ -1,0 +1,30 @@
+[
+  {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036125039331/0001140361-25-039331-index.htm",
+    "timestamp": "2025/10/24, 21:05:36",
+    "issuer": "ADMA BIOLOGICS, INC.",
+    "symbol": "ADMA",
+    "owner": "Grossman Adam S",
+    "transaction_code": "M",
+    "shares": 15000.0,
+    "price": 5.4,
+    "is_director": "true",
+    "is_officer": "true",
+    "title": "President and CEO",
+    "is_purchased": true
+  },
+  {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1745916/000174591625000010/0001745916-25-000010-index.htm",
+    "timestamp": "2025/10/24, 19:39:00",
+    "issuer": "PennyMac Financial Services, Inc.",
+    "symbol": "PFSI",
+    "owner": "Perotti Daniel Stanley",
+    "transaction_code": "M",
+    "shares": 4763.0,
+    "price": 11.28,
+    "is_director": "N/A",
+    "is_officer": "1",
+    "title": "Chief Financial Officer",
+    "is_purchased": true
+  }
+]

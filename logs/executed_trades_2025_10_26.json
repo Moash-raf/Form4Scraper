@@ -1,0 +1,22 @@
+[
+  {
+    "symbol": "ADMA",
+    "current_price": 15.18,
+    "stop_loss_price": 14.42,
+    "take_profit_price": 16.7,
+    "order_qty": 5,
+    "order_id": 31,
+    "status": "SENT",
+    "timestamp": "2025-10-26 19:58:43"
+  },
+  {
+    "symbol": "PFSI",
+    "current_price": 132.67,
+    "stop_loss_price": 126.04,
+    "take_profit_price": 145.94,
+    "order_qty": 5,
+    "order_id": 34,
+    "status": "SENT",
+    "timestamp": "2025-10-26 19:58:45"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1068851/000119312525259483/0001193125-25-259483-index.htm",
+    "timestamp": "2025/10/31, 08:05:48",
+    "issuer": "PROSPERITY BANCSHARES INC",
+    "symbol": "PB",
+    "owner": "HOLMES NED S",
+    "transaction_code": "S",
+    "shares": 1.0,
+    "price": 62.77,
+    "is_director": "true",
+    "is_officer": "false",
+    "title": "N/A",
+    "is_purchased": false
+  },
+  {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1875558/000110465925104664/0001104659-25-104664-index.htm",
+    "timestamp": "2025/10/31, 08:01:44",
+    "issuer": "Nuvectis Pharma, Inc.",
+    "symbol": "NVCT",
+    "owner": "Sanchez Juan",
+    "transaction_code": "A",
+    "shares": 30000.0,
+    "price": 0.0,
+    "is_director": "1",
+    "is_officer": "0",
+    "title": "",
+    "is_purchased": true
+  }
+]
